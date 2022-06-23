@@ -11,6 +11,17 @@ const sendText= async (phoneNumber)=>{
     }
   });
 }
+const getToken = async ({phoneNumber, oneTimePassword}) => {
+  const tokenResponce = await fetch('http://dev.stedi.me/twofactorlogin', {
+    method: 'POST',
+    body:JSON.stringify({oneTimePassword, phoneNumber}),
+    headers: {
+      'content-type':'application/json'
+    }
+  });
+
+const tokenResponceString = await tokenResponce.text();
+}
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
