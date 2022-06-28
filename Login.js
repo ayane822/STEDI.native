@@ -1,3 +1,4 @@
+import { useLinkProps } from "@react-navigation/native";
 import {useState, useRef} from "react";
 import { SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 
@@ -12,7 +13,7 @@ const sendText= async (phoneNumber)=>{
   });
 }
 const getToken = async ({phoneNumber, oneTimePassword}) => {
-  const tokenResponce = await fetch('http://dev.stedi.me/twofactorlogin', {
+  const tokenResponse = await fetch('http://dev.stedi.me/twofactorlogin', {
     method: 'POST',
     body:JSON.stringify({oneTimePassword, phoneNumber}),
     headers: {
@@ -20,10 +21,16 @@ const getToken = async ({phoneNumber, oneTimePassword}) => {
     }
   });
 
-const tokenResponceString = await tokenResponce.text();
+const responseCode = tokenResponse.status;//200 means logged in successfully
+console.log("Response Status Code", responseCode);
+if (responseCode==200){
+  setUserLoggedIn(true);
 }
 
-const Login = () => {
+const tokenResponseString = await tokenResponse.text();
+}
+
+const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [oneTimePassword, setOneTimePassword] = useState(null);
 
@@ -59,11 +66,12 @@ const Login = () => {
         style={styles.button}
         onPress={()=>
           {
-            sendText(phoneNumber)
+            getToken({phoneNumber, oneTimePassword, setUserLoggedIn:useLinkProps.setUserLoggedIn})
           }}
       >
         <Text>Log in </Text>
       </TouchableOpacity>
+
     </SafeAreaView>
 
   );
