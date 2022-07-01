@@ -2,6 +2,8 @@ import { useLinkProps } from "@react-navigation/native";
 import {useState, useRef} from "react";
 import { SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 
+
+
 const sendText= async (phoneNumber)=>{
   console.log("phoneNumber: ", phoneNumber);
   await fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber,{
@@ -30,6 +32,7 @@ if (responseCode==200){
 const tokenResponseString = await tokenResponse.text();
 }
 
+
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [oneTimePassword, setOneTimePassword] = useState(null);
@@ -50,7 +53,7 @@ const Login = (props) => {
             sendText(phoneNumber)
           }}
       >
-        <Text>Log in </Text>
+        <Text>Send Text </Text>
       </TouchableOpacity>
       <TextInput
         style={styles.input}

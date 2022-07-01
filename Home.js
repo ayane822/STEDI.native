@@ -4,10 +4,14 @@ import { Card, Button } from 'react-native-elements';
 import Icons from './Icons.js';
 import Bar  from './Bar.js';
 
-const Home = () => {
+
+
+const Home = (props) => {
   return (
     <View>
-      <Bar loggedInUser="Aya"/>
+      <Bar loggedInUser= {props.loggedInUser}/>
+      
+      {/* <Text> Welcome email</Text>  */}
       <Icons />
     </View>
   );

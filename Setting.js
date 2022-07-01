@@ -8,8 +8,9 @@ function Setting(props) {
     return(
       <View>
       <Text>
-        Welcome Ayane! {props.loggedInUser}
+        Welcome {props.loggedInUser}
       </Text>
+
       <Button
       title="Log In"
       onPress={() => Alert.alert('Simple Button pressed')}
