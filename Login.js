@@ -2,7 +2,10 @@ import { useLinkProps } from "@react-navigation/native";
 import {useState, useRef} from "react";
 import { SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text} from "react-native";
 
-
+//tuketashitayatu
+// var uname = "";
+// export function set_uname(e) {uname = e; }
+// export function get_uname() {return uname;}
 
 const sendText= async (phoneNumber)=>{
   console.log("phoneNumber: ", phoneNumber);
@@ -14,32 +17,36 @@ const sendText= async (phoneNumber)=>{
     }
   });
 }
-const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn}) => {
-  const tokenResponse = await fetch('http://dev.stedi.me/twofactorlogin', {
-    method: 'POST',
-    body:JSON.stringify({oneTimePassword, phoneNumber}),
-    headers: {
-      'content-type':'application/json'
-    }
-  });
-
-const responseCode = tokenResponse.status;//200 means logged in successfully
-console.log("Response Status Code", responseCode);
-if (responseCode==200){
-  setUserLoggedIn(true);
-}
-
-const tokenResponseString = await tokenResponse.text();
-console.log("Token", tokenResponse);
-
-const emailResponse = await fetch('https://dev.stedi.me/validate/'+tokenResponseString);
-const email = await emailResponse.text();
-props.setUserName(email);
-}
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [oneTimePassword, setOneTimePassword] = useState(null);
+
+  const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn}) => {
+    const tokenResponse = await fetch('https://dev.stedi.me/twofactorlogin', {
+      method: 'POST',
+      body:JSON.stringify({oneTimePassword, phoneNumber}),
+      headers: {
+        'content-type':'application/json'
+      }
+    });
+  
+  const responseCode = tokenResponse.status;//200 means logged in successfully
+  console.log("Response Status Code", responseCode);
+  //add
+  //set_uname(loggedInUser)
+  if (responseCode==200){
+    setUserLoggedIn(true);
+  }
+  
+  const tokenResponseString = await tokenResponse.text();
+  console.log("Token", tokenResponse);
+  
+  const emailResponse = await fetch('https://dev.stedi.me/validate/'+tokenResponseString);
+  const email = await emailResponse.text();
+  props.setUserName(email);
+  }
+  
 
   return (
     <SafeAreaView style={styles.margin}>
